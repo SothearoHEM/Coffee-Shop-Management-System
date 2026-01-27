@@ -3,7 +3,10 @@ import AppRoutes from './routes/AppRoutes.jsx'
 
 function App() {
   return (
-    <AppRoutes />
+    <div className="min-h-screen bg-blue-100">
+      <AppRoutes/>
+    </div>
+    
   )
 }
 

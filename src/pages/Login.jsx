@@ -40,12 +40,12 @@ function Login(){
                 <label htmlFor="" className='text-gray-700 font-semibold'>Username</label>
                 <div className='relative'>
                     <FaRegUser className='text-gray-400 text-lg absolute left-3 top-3'/>
-                    <input type="text" placeholder='Enter Your Username' className='w-full text-gray-800 border border-blue-400 rounded-lg h-10 px-2 space-x-3 focus:outline-none focus:border-blue-800 focus:shadow-md pl-10' required value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input type="text" placeholder='Enter Your Username' className='w-full text-gray-800 border border-blue-400 rounded-lg h-10 px-2 space-x-3 focus:outline-none focus:border-blue-800 focus:border-2 focus:shadow-md pl-10' required value={username} onChange={(e) => setUsername(e.target.value)} />
                 </div>
                 <label htmlFor="" className='text-gray-700 font-semibold'>Password</label>
                 <div className='relative'>
                     <LuLockKeyhole className='text-gray-400 text-lg absolute left-3 top-3'/>
-                    <input type="password" placeholder='Enter Your Password' className='w-full text-gray-800 border border-blue-400 rounded-lg h-10 px-2 space-x-3 focus:outline-none focus:border-blue-800 focus:shadow-md pl-10' required value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" placeholder='Enter Your Password' className='w-full text-gray-800 border border-blue-400 rounded-lg h-10 px-2 space-x-3 focus:outline-none focus:border-blue-800 focus:border-2 focus:shadow-md pl-10' required value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <button type='submit' className='bg-blue-600 py-2 rounded-lg mt-5 text-white hover:bg-blue-800'>Sign In</button>
             </form>
