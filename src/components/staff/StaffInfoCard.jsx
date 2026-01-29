@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { AuthContext } from '../../../contexts/AuthContext.jsx';
+import { AuthContext } from '../../contexts/AuthContext.jsx';
 
 function StaffInfoCard() {
     const {users} = useContext(AuthContext);

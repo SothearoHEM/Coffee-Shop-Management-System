@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-    const [users] = useState([
+    const [users, setUsers] = useState([
         {
         id: '1',
         name: 'Admin',
@@ -26,6 +26,15 @@ export const AuthProvider = ({ children }) => {
         avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
         },
     ]);
+    const addUser = (newUser) => {
+        setUsers([...users, newUser]);
+    }
+    const deleteUser = (userId) => {
+        setUsers(users.filter(user => user.id !== userId));
+    }
+    const editUser = (updatedUser) => {
+        setUsers(users.map(user => (user.id === updatedUser.id ? updatedUser : user)));
+    }
     const [user, setUser] = useState(() => {
         const savedUser = localStorage.getItem('user');
         return savedUser ? JSON.parse(savedUser) : null;
@@ -39,7 +48,6 @@ export const AuthProvider = ({ children }) => {
         const savedIsLoggedIn = localStorage.getItem('isLoggedIn');
         return savedIsLoggedIn === 'true';
     });
-
     // Persist authentication state to localStorage
     useEffect(() => {
         if (user) {
@@ -88,7 +96,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('isLoggedIn');
     };
   return (
-    <AuthContext.Provider value={{ users, user, setUser, error, setError, login, logout, currentUser, setCurrentUser, isLoggedIn, setIsLoggedIn}}>
+    <AuthContext.Provider value={{ users, user, setUser, error, setError, login, logout, currentUser, setCurrentUser, isLoggedIn, setIsLoggedIn, addUser, deleteUser, editUser }}>
       {children}
     </AuthContext.Provider>
   );
