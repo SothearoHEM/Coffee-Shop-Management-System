@@ -17,7 +17,7 @@ function Header() {
       <header className="bg-blue-50 shadow-md p-4 flex items-center justify-between border-b border-blue-200">
         <div className="flex items-center space-x-4">
           <span><PiCoffeeBold className='text-5xl text-white bg-blue-500 p-3 rounded-2xl'/></span>
-          <div>
+          <div className='md:block hidden'>
             <p className='text-lg text-blue-900 '>Coffee Shop Management System</p>
             <p className="text-sm text-blue-400">Manage your coffee shop efficiently</p>
           </div>

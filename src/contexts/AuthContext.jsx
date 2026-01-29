@@ -1,5 +1,4 @@
-import { createContext, useEffect } from "react";
-import { useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
@@ -89,7 +88,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('isLoggedIn');
     };
   return (
-    <AuthContext.Provider value={{ user, setUser, error, setError, login, logout, currentUser, setCurrentUser, isLoggedIn, setIsLoggedIn}}>
+    <AuthContext.Provider value={{ users, user, setUser, error, setError, login, logout, currentUser, setCurrentUser, isLoggedIn, setIsLoggedIn}}>
       {children}
     </AuthContext.Provider>
   );
