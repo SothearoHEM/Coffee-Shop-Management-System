@@ -28,7 +28,7 @@ function Login(){
         }
     };
   return (
-    <div className='w-full h-lvh bg-blue-200 flex items-center justify-center relative'>
+    <div className='w-full h-lvh bg-blue-200 flex items-center justify-center relative md:p-0 p-2'>
         <div className='bg-white w-125 h-auto border border-blue-400 shadow-lg shadow-gray-400 rounded-xl p-5'>
             <div className='flex flex-col items-center justify-center space-y-2'>
                 <PiCoffeeBold className='text-7xl text-white bg-blue-500 p-5 rounded-2xl'/>

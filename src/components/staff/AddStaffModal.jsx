@@ -1,10 +1,8 @@
-import React from 'react'
-import { useState } from 'react'
-import { useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext.jsx';
 
-function AddStaffModal({ closeModal }) {
-  const { addUser } = useContext(AuthContext);
+function AddStaffModal({ closeModal , userToEdit, setUserToEdit, defaultValues}) {
+  const { addUser, editUser } = useContext(AuthContext);
   const [addStaffData, setAddStaffData] = useState({
       name: '',
       email: '',
@@ -14,6 +12,20 @@ function AddStaffModal({ closeModal }) {
       avatar: null,
       activeStatus: true,
     });
+
+  useEffect(() => {
+    if (defaultValues) {
+      setAddStaffData({
+        name: defaultValues.name || '',
+        email: defaultValues.email || '',
+        password: defaultValues.password || '',
+        phone: defaultValues.phone || '',
+        role: defaultValues.role || '',
+        avatar: defaultValues.avatar || null,
+        activeStatus: defaultValues.status === 'active',
+      });
+    }
+  }, [defaultValues, userToEdit]);
    const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     if (type === 'checkbox') {
@@ -34,9 +46,13 @@ function AddStaffModal({ closeModal }) {
     }
   }
   const validateForm = () => {
-    // Basic validation example
-    if (!addStaffData.name || !addStaffData.email || !addStaffData.password || !addStaffData.phone || !addStaffData.role) {
+    if (!addStaffData.name || !addStaffData.email || !addStaffData.phone || !addStaffData.role) {
       alert('Please fill in all required fields.');
+      return false;
+    }
+    // Password is only required when adding a new user
+    if (!userToEdit && !addStaffData.password) {
+      alert('Please enter a password.');
       return false;
     }
     return true;
@@ -44,20 +60,33 @@ function AddStaffModal({ closeModal }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    addUser({
-      ...addStaffData,
-      id: Date.now().toString(),
-      hireDate: new Date(),
-      status: addStaffData.activeStatus ? 'active' : 'inactive',
-      avatar: addStaffData.avatar ? URL.createObjectURL(addStaffData.avatar) : null,
-    });
+    
+    if (userToEdit) {
+      // Edit existing user
+      editUser({
+        ...defaultValues,
+        ...addStaffData,
+        status: addStaffData.activeStatus ? 'active' : 'inactive',
+        avatar: addStaffData.avatar instanceof File ? URL.createObjectURL(addStaffData.avatar) : addStaffData.avatar,
+      });
+      setUserToEdit(null);
+    } else {
+      // Add new user
+      addUser({
+        ...addStaffData,
+        id: Date.now().toString(),
+        hireDate: new Date(),
+        status: addStaffData.activeStatus ? 'active' : 'inactive',
+        avatar: addStaffData.avatar ? URL.createObjectURL(addStaffData.avatar) : null,
+      });
+    }
     closeModal();
   }
   return (
-    <div className='fixed inset-0 bg-black/50 flex items-center justify-center'>
+    <div className='fixed inset-0 bg-black/50 flex items-center justify-center md:p-0 p-2 z-50'>
         <form className='bg-white p-6 rounded-md shadow-md max-w-xl w-full' onSubmit={handleSubmit}>
-            <h2 className='text-xl mb-2'>Add New Staff Member</h2>
-            <p className='mb-4 text-sm text-gray-600'>Add a new team member to your coffee shop.</p>
+            <h2 className='text-xl mb-2'>{userToEdit ? 'Edit Staff Member' : 'Add New Staff Member'}</h2>
+            <p className='mb-4 text-sm text-gray-600'>{userToEdit ? 'Update staff member information.' : 'Add a new team member to your coffee shop.'}</p>
             <div className='mb-4'>
                 <label className='block mb-1 font-medium' htmlFor="name">Name</label>
                 <input className='w-full border border-gray-300 p-2 rounded-md' type="text" id='name' name='name' required placeholder='John Doe' value={addStaffData.name} onChange={handleChange} />
@@ -67,8 +96,8 @@ function AddStaffModal({ closeModal }) {
                 <input className='w-full border border-gray-300 p-2 rounded-md' type="email" id='email' name='email' required placeholder='john.doe@example.com' value={addStaffData.email} onChange={handleChange} />
             </div>
             <div className='mb-4'>
-                <label className='block mb-1 font-medium' htmlFor="password">Password</label>
-                <input className='w-full border border-gray-300 p-2 rounded-md' type="password" id='password' name='password' required placeholder='Enter a secure password' value={addStaffData.password} onChange={handleChange} />
+                <label className='block mb-1 font-medium' htmlFor="password">Password {!userToEdit && <span className='text-red-500'>*</span>}</label>
+                <input className='w-full border border-gray-300 p-2 rounded-md' type="password" id='password' name='password' required={!userToEdit} placeholder='Enter a secure password' value={addStaffData.password} onChange={handleChange} />
             </div>
             <div className='mb-4'>
                 <label className='block mb-1 font-medium' htmlFor="phone">Phone</label>
@@ -93,7 +122,7 @@ function AddStaffModal({ closeModal }) {
             </div>
             <div className='flex justify-end space-x-2'>
                 <button onClick={closeModal} className='bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600' type='button'>Cancel</button>
-                <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600' type='submit'>Add Staff Member</button>
+                <button className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600' type='submit'>{userToEdit ? 'Update Staff Member' : 'Add Staff Member'}</button>
             </div>
         </form>
     </div>

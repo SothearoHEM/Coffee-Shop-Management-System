@@ -8,7 +8,7 @@ function StaffInfoCard() {
     const adminStaff = users?.filter(user => user.role === 'admin').length || 0;
 
   return (
-    <div className='w-full grid grid-cols-3 gap-5'>
+    <div className='w-full grid md:grid-cols-3 grid-cols-1 gap-5'>
         <div className='w-full bg-white border border-blue-200 rounded-lg shadow-md p-4 flex flex-col space-y-10'>
             <p className='font-semibold'>Total Staff</p>
             <h2 className='text-xl font-bold text-blue-900'>{totalStaff}</h2>
