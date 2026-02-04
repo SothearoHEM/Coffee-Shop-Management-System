@@ -2,13 +2,18 @@ import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
+    const [staffRoles, setStaffRoles] = useState([
+        { id: '1', role: 'admin' },
+        { id: '2', role: 'manager' },
+        { id: '3', role: 'staff' },
+    ]);
     const [users, setUsers] = useState([
         {
         id: '1',
         name: 'Admin',
         email: 'admin@coffee.com',
         password: 'admin123',
-        role: 'admin',
+        role: staffRoles.find(r => r.role === 'admin')?.role || 'staff',
         phone: '+1 (555) 100-0001',
         hireDate: new Date('2023-01-15'),
         status: 'active',
@@ -19,7 +24,7 @@ export const AuthProvider = ({ children }) => {
         name: 'Staff',
         email: 'staff@coffee.com',
         password: 'staff123',
-        role: 'staff',
+        role: staffRoles.find(r => r.role === 'staff')?.role || 'staff',
         phone: '+1 (555) 100-0002',
         hireDate: new Date('2023-03-22'),
         status: 'active',

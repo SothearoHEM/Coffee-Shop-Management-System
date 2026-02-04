@@ -48,9 +48,9 @@ function StaffCard({ user, userEdit }) {
                 <p className='text-gray-600 text-sm'><span className='text-sm'>Hire Date:</span> {hireDate.toLocaleDateString()}</p>
               </div>
               <div className='mt-4 flex'>
-                <button onClick={user.status === 'active' ? handleDeactivate : handleActive} className='flex-1 border border-blue-200 rounded-md px-4 py-1 mr-2 hover:bg-blue-300'>{user.status === 'active' ? 'Deactivate' : 'Activate'}</button>
-                <button onClick={handleEdit} className='border border-blue-200 rounded-md px-4 py-1 mr-2 hover:bg-blue-300'><MdOutlineModeEdit /></button>
-                <button onClick={handleDelete} className='border border-red-300 rounded-md px-4 py-1 text-red-500 hover:bg-red-300'><FaRegTrashCan /></button>
+                <button onClick={user.status === 'active' ? handleDeactivate : handleActive} className='flex-1 border border-blue-200 rounded-md md:px-2 lg:px-4 px-4 py-1 mr-2 hover:bg-blue-300'>{user.status === 'active' ? 'Deactivate' : 'Activate'}</button>
+                <button onClick={handleEdit} className='border border-blue-200 rounded-md md:px-2 lg:px-4 px-4 py-1 mr-2 hover:bg-blue-300'><MdOutlineModeEdit /></button>
+                <button onClick={handleDelete} className='border border-red-300 rounded-md md:px-2 lg:px-4 px-4 py-1 text-red-500 hover:bg-red-300'><FaRegTrashCan /></button>
               </div>
         </div>
   )
