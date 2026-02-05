@@ -18,7 +18,7 @@ export const InventoryProvider = ({ children }) => {
             id: '2',
             name: 'Milk',
             unit: 'liters',
-            currentStock: 30,
+            currentStock: 15,
             minStock: 20,
             maxStock: 100,
             unitCost: 1.2,
