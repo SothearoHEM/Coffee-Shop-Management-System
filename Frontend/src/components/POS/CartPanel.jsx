@@ -30,7 +30,7 @@ function CartPanel() {
         {cart.length > 0 ? (
           <div className='space-y-3'>
             {cart.map(item => (
-              <div key={item.id} className='bg-white p-3 rounded-lg border border-blue-200 flex flex-col xl:flex-row sm:flex-row lg:flex-col xl:justify-between sm:justify-between'>
+              <div key={item.id} className='bg-white p-3 rounded-lg border border-blue-200 flex flex-col xl:flex-row sm:flex-row lg:flex-col xl:justify-between sm:justify-between gap-2'>
                 <div className='flex gap-3 items-center'>
                     <div className='w-16 h-16 overflow-hidden border-2 border-blue-200 rounded-lg'>
                         <img src={item.image} alt={item.name} className='w-full h-full rounded-lg object-cover' />

@@ -43,13 +43,13 @@ function Menu() {
         </div>
         <div className='w-full'>
           {filteredMenu.length > 0 ? (
-            <div className='grid md:grid-cols-3 grid-cols-1 gap-6 md:mb-10 mb-2'>
+            <div className='grid md:grid-cols-3 grid-cols-1 gap-6 md:mb-5 mb-2'>
                 {filteredMenu.map((item) => (
                 <MenuCard key={item.id} item={item} itemEdit={itemEdit} />
               ))}
             </div>
           ) : (
-            <div className='flex items-center justify-center '>
+            <div className='flex items-center justify-center mb-5'>
               <Lottie animationData={NotFound} loop={true} className='w-64 h-64 md:w-100 md:h-100'/>
             </div>
           )}

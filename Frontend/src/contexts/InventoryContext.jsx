@@ -7,7 +7,7 @@ export const InventoryProvider = ({ children }) => {
             id: '1',
             name: 'Coffee Beans',
             unit: 'kg',
-            currentStock: 15,
+            currentStock: 8,
             minStock: 10,
             maxStock: 50,
             unitCost: 12.5,

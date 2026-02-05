@@ -33,11 +33,11 @@ function Staff() {
         <StaffInfoCard />
         <div className='w-full'>
           {users.length > 0 ? 
-            <div className='grid md:grid-cols-3 grid-cols-1 gap-6'>
+            <div className='grid md:grid-cols-3 grid-cols-1 gap-6 mb-5'>
                 {users.map((user) => <StaffCard key={user.id} user={user} userEdit={userEdit} />)}
             </div>
           :
-          <div className='flex items-center justify-center h-125 mx-auto'>
+          <div className='flex items-center justify-center h-125 mx-auto mb-5'>
             <Lottie animationData={NotFound} loop={true} className='w-64 h-64 md:w-90 md:h-90'/>
           </div>
           }
