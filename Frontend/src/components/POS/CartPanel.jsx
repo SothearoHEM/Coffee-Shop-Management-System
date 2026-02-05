@@ -30,17 +30,17 @@ function CartPanel() {
         {cart.length > 0 ? (
           <div className='space-y-3'>
             {cart.map(item => (
-              <div key={item.id} className='bg-white p-3 rounded-lg border border-blue-200 flex justify-between items-center'>
+              <div key={item.id} className='bg-white p-3 rounded-lg border border-blue-200 flex flex-col xl:flex-row sm:flex-row lg:flex-col xl:justify-between sm:justify-between'>
                 <div className='flex gap-3 items-center'>
                     <div className='w-16 h-16 overflow-hidden border-2 border-blue-200 rounded-lg'>
                         <img src={item.image} alt={item.name} className='w-full h-full rounded-lg object-cover' />
                     </div>
                     <div>
-                        <p className='font-semibold text-blue-900'>{item.name}</p>
+                        <p className='font-semibold text-blue-900 line-clamp-1'>{item.name}</p>
                         <p className='text-sm text-blue-600'>${item.price.toFixed(2)} each</p>
                     </div>
                 </div>
-                <div className='flex items-center gap-3'>
+                <div className='flex items-center gap-3 justify-end'>
                   <button onClick={() => decreaseQty(item.id)} className='border border-blue-400 p-2 rounded-lg hover:bg-blue-200'><CgMathMinus /></button>
                   <span className='px-2 font-semibold'>{item.quantity}</span>
                   <button onClick={() => increaseQty(item.id)} className='border border-blue-400 p-2 rounded-lg hover:bg-blue-200'><CgMathPlus /></button>

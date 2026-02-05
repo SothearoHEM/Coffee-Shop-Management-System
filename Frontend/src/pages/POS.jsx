@@ -14,8 +14,8 @@ function POS() {
             <p className='text-gray-500'>Manage your sales transactions and orders</p>
           </div>
         </div>
-        <div className='w-full flex flex-row gap-5'>
-            <div className='w-2/3 rounded-lg shadow-md p-4 flex flex-col gap-4 border border-blue-300 bg-white'>
+        <div className='w-full flex lg:flex-row flex-col gap-5 mb-5'>
+            <div className='lg:w-2/3 w-full rounded-lg shadow-md p-4 flex flex-col gap-4 border border-blue-300 bg-white'>
                 <h2 className='flex items-center gap-2'><span className='text-blue-900'><FiCoffee /></span>Menu Items</h2>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {menu.length > 0 ? (
@@ -27,7 +27,7 @@ function POS() {
                     )}
                 </div>
             </div>
-            <div className='w-1/3 h-full rounded-lg shadow-md p-4 flex flex-col gap-4 border border-blue-300 bg-white'>
+            <div className='lg:w-1/3 w-full h-full rounded-lg shadow-md p-4 flex flex-col gap-4 border border-blue-300 bg-white'>
                 <CartPanel></CartPanel>
             </div>   
         </div>
