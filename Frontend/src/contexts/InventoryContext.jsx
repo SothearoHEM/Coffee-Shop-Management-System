@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-export const InvetoryContext = createContext();
+export const InventoryContext = createContext();
 
 export const InventoryProvider = ({ children }) => {
     const [inventory, setInventory] = useState([
@@ -48,9 +48,19 @@ export const InventoryProvider = ({ children }) => {
             lastRestocked: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
         }
     ]);
+
+    const addInventoryItem = (item) => {
+        setInventory(prevInventory => [...prevInventory, item]);
+    };
+    const deleteInventoryItem = (itemId) => {
+        setInventory(prevInventory => prevInventory.filter(item => item.id !== itemId));
+    };
+    const updateInventoryItem = (updatedItem) => {
+        setInventory(prevInventory => prevInventory.map(item => item.id === updatedItem.id ? updatedItem : item));
+    };
     return (
-        <InvetoryContext.Provider value={{ inventory, setInventory }}>
+        <InventoryContext.Provider value={{ inventory, setInventory, addInventoryItem, deleteInventoryItem, updateInventoryItem }}>
             {children}
-        </InvetoryContext.Provider>
+        </InventoryContext.Provider>
     );
 }

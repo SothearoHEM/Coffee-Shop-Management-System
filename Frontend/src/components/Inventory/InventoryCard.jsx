@@ -2,8 +2,11 @@ import React from 'react'
 import { MdOutlineInventory2 } from "react-icons/md";
 import { MdOutlineModeEdit } from 'react-icons/md';
 import { FaRegTrashCan } from 'react-icons/fa6';
+import { useContext } from 'react'
+import { InventoryContext } from '../../contexts/InventoryContext.jsx';
 
-function InventoryCard({ item }) {
+function InventoryCard({ item, onRestock, onEdit }) {
+    const {deleteInventoryItem} = useContext(InventoryContext);
     const stockStatus = () => {
         if (item.currentStock <= item.minStock) {
             return { text: 'Low Stock', color: 'text-red-500', border: 'border-red-500',bg: 'bg-red-50' }; 
@@ -11,6 +14,11 @@ function InventoryCard({ item }) {
             return { text: 'Overstocked', color: 'text-yellow-500', border: 'border-yellow-500',bg: 'bg-yellow-50' };
         } else {
             return { text: 'In Stock', color: 'text-green-500', border: 'border-green-500',bg: 'bg-green-50' };
+        }
+    };
+    const handleDelete = (itemId) => {
+        if (window.confirm("Are you sure you want to delete this item?")) {
+        deleteInventoryItem(itemId);
         }
     };
   return (
@@ -25,7 +33,7 @@ function InventoryCard({ item }) {
                 <span>{item.currentStock} {item.unit} / {item.maxStock} {item.unit}</span>
             </div>
             <div className='w-full bg-blue-100 h-2 rounded-lg overflow-hidden'>
-                <div className='bg-blue-500 h-2 rounded-lg' style={{ width: `${(item.currentStock / item.maxStock) * 100}%` }}></div>
+                <div className='bg-blue-500 h-2 rounded-lg animate-bar transition-width duration-500' style={{ width: `${(item.currentStock / item.maxStock) * 100}%` }}></div>
             </div>
         </div>
         <div className='flex flex-col gap-4 text-sm'>
@@ -44,13 +52,13 @@ function InventoryCard({ item }) {
             </div>
             <div className='flex justify-between'>
                 <span className='text-gray-500'>Last Restocked:</span>
-                <span className='text-blue-900 font-semibold'>{item.lastRestocked.toLocaleDateString()}</span>
+                <span className='text-blue-900 font-semibold'>{new Date(item.lastRestocked).toLocaleDateString()}</span>
             </div>
         </div>
         <div className='mt-4 flex'>
-            <button  className='flex-1 border border-blue-200 rounded-md md:px-2 lg:px-4 px-4 py-1 mr-2 hover:bg-blue-300'>Restock to Max</button>
-            <button  className='border border-blue-200 rounded-md md:px-3 lg:px-4 px-4 py-1 mr-2 hover:bg-blue-300'><MdOutlineModeEdit /></button>
-            <button  className='border border-red-300 rounded-md md:px-3 lg:px-4 px-4 py-1 text-red-500 hover:bg-red-300'><FaRegTrashCan /></button>
+            <button onClick={onRestock} className='flex-1 border border-blue-200 rounded-md md:px-2 lg:px-4 px-4 py-1 mr-2 hover:bg-blue-300'>Restock to Max</button>
+            <button onClick={onEdit} className='border border-blue-200 rounded-md md:px-3 lg:px-4 px-4 py-1 mr-2 hover:bg-blue-300'><MdOutlineModeEdit /></button>
+            <button onClick={() => handleDelete(item.id)} className='border border-red-300 rounded-md md:px-3 lg:px-4 px-4 py-1 text-red-500 hover:bg-red-300'><FaRegTrashCan /></button>
         </div>
     </div>
   )

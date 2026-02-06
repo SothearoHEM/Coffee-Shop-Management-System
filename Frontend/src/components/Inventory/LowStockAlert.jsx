@@ -1,7 +1,7 @@
 import React from 'react'
 import { GoAlert } from "react-icons/go";
 
-function LowStockAlert({ items }) {
+function LowStockAlert({ items, onRestock }) {
   return (
     <div>
         <div className='w-full h-full rounded-lg shadow-md p-4 flex flex-col gap-4 border border-red-300 bg-red-50'>
@@ -15,7 +15,7 @@ function LowStockAlert({ items }) {
                   <p className='font-semibold text-blue-900'>{item.name}</p>
                   <div className='flex items-center gap-3'>
                       <p className='text-gray-600'><span className='font-semibold text-blue-900'>{item.currentStock} {item.unit} / {item.maxStock} {item.unit}</span></p>
-                      <button className='mt-2 bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-red-800'>Restock</button>
+                      <button onClick={() => onRestock(item.id)} className='mt-2 bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-red-800'>Restock</button>
                   </div>
               </div>
             ))}
