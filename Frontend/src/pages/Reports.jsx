@@ -1,4 +1,10 @@
 import React from 'react'
+import ReportStatCard from '../components/Report/ReportStatCard'
+import DailyRevenueOverview from '../components/Report/DailyRevenueOverview'
+import DailyOrderVolume from '../components/Report/DailyOrderVolume'
+import DailySalesBreakdown from '../components/Report/DailySalesBreakdown'
+import TopSellingItems from '../components/Report/TopSellingItems'
+import BestSellersDetails from '../components/Report/BestSellersDetails'
 
 function Reports() {
   return (
@@ -9,8 +15,17 @@ function Reports() {
             <p className='text-gray-500'>Comprehensive analytics for the last 7 days</p>
           </div>
         </div>
-        <div>
-
+        <div className='w-full h-full'>
+            <ReportStatCard />
+        </div>
+        <div className='w-full h-full grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <DailyRevenueOverview />
+            <DailyOrderVolume />
+            <TopSellingItems />
+            <BestSellersDetails />
+        </div>
+        <div className='w-full h-full mb-5'>
+            <DailySalesBreakdown />
         </div>
     </div>
   )

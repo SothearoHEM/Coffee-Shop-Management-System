@@ -15,7 +15,7 @@ function StatCard() {
     <div className='grid md:grid-cols-4 grid-cols-1 gap-6 mb-5'>
         <div className='w-full bg-white p-4 rounded-xl border border-blue-200 flex flex-col gap-3 hover:shadow-lg duration-300 hover:scale-105 transition-transform'>
             <h1 className='font-semibold flex justify-between items-center gap-2 text-lg'><span className=' text-gray-700'>Today's Revenue</span><span className='p-2  bg-blue-600 text-white rounded-xl'><LuDollarSign /></span></h1>
-            <h2 className='text-2xl font-bold text-blue-900'>${orders.filter(order => order.createdAt.toDateString() === today).reduce((total, order) => total + order.total, 0)}</h2>
+            <h2 className='text-2xl font-bold text-blue-900'>${orders.filter(order => order.createdAt.toDateString() === today).reduce((total, order) => total + order.total, 0).toFixed(2)}</h2>
             <p className='text-sm text-gray-500'>Revenue generated today</p>
         </div>
         <div className='w-full bg-white p-4 rounded-xl border border-blue-200 flex flex-col gap-3 hover:shadow-lg duration-300 hover:scale-105 transition-transform'>
