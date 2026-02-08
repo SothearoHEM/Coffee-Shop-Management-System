@@ -1,11 +1,13 @@
 import { useContext, useRef, useState } from "react";
 import { CartContext } from "../../contexts/CartContext.jsx";
 import { AuthContext } from "../../contexts/AuthContext.jsx";
+import { OrderContext } from "../../contexts/OrderContext.jsx";
 
 const Receipt = ({ close }) => {
 
   const { cart, subtotal, tax, total, clearCart } = useContext(CartContext);
   const { currentUser } = useContext(AuthContext);
+  const { createOrder, updateOrderStatus } = useContext(OrderContext);
   const printRef = useRef();
   const [paymentMethod, setPaymentMethod] = useState("Cash");
 
@@ -25,6 +27,13 @@ const Receipt = ({ close }) => {
   });
 
   const handlePrint = () => {
+    const newOrder = createOrder({
+      items: cart,
+      paymentMethod,
+      cashier: currentUser?.name || "N/A"
+    });
+    updateOrderStatus(newOrder.id, "completed");
+
     const content = printRef.current.innerHTML;
     const win = window.open("", "", "width=400,height=600");
 
