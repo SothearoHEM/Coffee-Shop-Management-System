@@ -1,17 +1,20 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext.jsx';
 
+const emptyStaffData = {
+  name: '',
+  email: '',
+  password: '',
+  phone: '',
+  role: '',
+  avatar: null,
+  activeStatus: true,
+};
+
 function AddStaffModal({ closeModal , userToEdit, setUserToEdit, defaultValues}) {
   const { addUser, editUser } = useContext(AuthContext);
-  const [addStaffData, setAddStaffData] = useState({
-      name: '',
-      email: '',
-      password: '',
-      phone: '',
-      role: '',
-      avatar: null,
-      activeStatus: true,
-    });
+  const [addStaffData, setAddStaffData] = useState(emptyStaffData);
 
   useEffect(() => {
     if (defaultValues) {
@@ -24,6 +27,8 @@ function AddStaffModal({ closeModal , userToEdit, setUserToEdit, defaultValues})
         avatar: defaultValues.avatar || null,
         activeStatus: defaultValues.status === 'active',
       });
+    } else {
+      setAddStaffData(emptyStaffData);
     }
   }, [defaultValues, userToEdit]);
    const handleChange = (e) => {

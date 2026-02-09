@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { PlusIcon } from 'lucide-react'
 import { useContext } from 'react'
 import { MenuContext } from '../contexts/MenuContext.jsx'
@@ -6,9 +6,12 @@ import MenuCard from '../components/menu/MenuCard.jsx'
 import NotFound from '../assets/NotFound.json'
 import Lottie from 'lottie-react'
 import MenuModal from '../components/menu/MenuModal.jsx'
+import { UiContext } from '../contexts/UIContext.jsx'
+import SectionSkeleton from '../components/common/SectionSkeleton.jsx'
 
 function Menu() {
   const {menu, categories} = useContext(MenuContext);
+  const { isLoading, setLoading } = useContext(UiContext);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(null);
@@ -27,6 +30,12 @@ function Menu() {
   const filteredMenu = selectedCategory === "All" ? menu : menu.filter(item => item.category === selectedCategory);
   const defaultValues = itemToEdit ? menu.find(item => item.id === itemToEdit) : null;
 
+  useEffect(() => {
+    setLoading(true);
+    const timeoutId = setTimeout(() => setLoading(false), 350);
+    return () => clearTimeout(timeoutId);
+  }, [setLoading]);
+
   return (
     <div className='xl:w-7xl lg:p-2 w-full md:p-2 xl:p-0 p-2 mx-auto mt-6 flex flex-col space-y-4'>
         <div className='flex md:items-center md:justify-between mb-4 flex-col md:flex-row gap-4'>
@@ -42,7 +51,9 @@ function Menu() {
           ))}
         </div>
         <div className='w-full'>
-          {filteredMenu.length > 0 ? (
+          {isLoading ? (
+            <SectionSkeleton />
+          ) : filteredMenu.length > 0 ? (
             <div className='grid md:grid-cols-3 grid-cols-1 gap-6 md:mb-5 mb-2'>
                 {filteredMenu.map((item) => (
                 <MenuCard key={item.id} item={item} itemEdit={itemEdit} />

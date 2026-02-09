@@ -1,47 +1,53 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useMemo } from "react";
 import { MenuContext } from "./MenuContext.jsx";
 
 export const OrderContext = createContext();
 export const useOrders = () => useContext(OrderContext);
 
+const initialOrders = (() => {
+  const now = Date.now();
+  return [
+    {
+      id: "ORD-1001",
+      items: [
+        { name: "Espresso", category: "Coffee", price: 3.0, quantity: 2 },
+        { name: "Blueberry Muffin", category: "Pastry", price: 2.5, quantity: 1 },
+      ],
+      subtotal: 8.5,
+      tax: 0.85,
+      total: 9.35,
+      paymentMethod: "cash",
+      cashier: "Alice",
+      status: "completed",
+      customers: [
+        { id: 'CUST-001', name: 'John Doe', email: 'john.doe@example.com' }
+      ],
+      createdAt: new Date(now - 2 * 60 * 60 * 1000), // 2 hours ago
+    },
+    {
+      id: "ORD-1002",
+      items: [
+        { name: "Latte", category: "Coffee", price: 4.0, quantity: 1 },
+        { name: "Chocolate Croissant", category: "Pastry", price: 3.0, quantity: 2 },
+      ],
+      subtotal: 10.0,
+      tax: 1.0,
+      total: 11.0,
+      paymentMethod: "card",
+      cashier: "Bob",
+      status: "pending",
+      createdAt: new Date(now - 30 * 60 * 1000), // 30 minutes ago
+      customers: [
+        { id: 'CUST-002', name: 'Jane Smith', email: 'jane.smith@example.com' }
+      ],
+    }
+  ];
+})();
+
 export const OrderProvider = ({ children }) => {
     const { MenuCategories } = useContext(MenuContext);
-  const [orders, setOrders] = useState([
-    {
-        id: "ORD-1001",
-        items: [
-            { name: "Espresso", category: "Coffee", price: 3.0, quantity: 2 },
-            { name: "Blueberry Muffin", category: "Pastry", price: 2.5, quantity: 1 },
-        ],
-        subtotal: 8.5,
-        tax: 0.85,
-        total: 9.35,
-        paymentMethod: "cash",
-        cashier: "Alice",
-        status: "completed",
-        customers: [
-            { id: 'CUST-001', name: 'John Doe', email: 'john.doe@example.com' }
-        ],
-        createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-      },
-        {
-        id: "ORD-1002",
-        items: [
-            { name: "Latte", category: "Coffee", price: 4.0, quantity: 1 },
-            { name: "Chocolate Croissant", category: "Pastry", price: 3.0, quantity: 2 },
-        ],
-        subtotal: 10.0,
-        tax: 1.0,
-        total: 11.0,
-        paymentMethod: "card",
-        cashier: "Bob",
-        status: "pending",
-        createdAt: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
-        customers: [
-            { id: 'CUST-002', name: 'Jane Smith', email: 'jane.smith@example.com' }
-        ],
-    }
-  ]);
+  const [orders, setOrders] = useState(initialOrders);
   const weeksRevenue = useMemo(() => {
     const today = new Date();
     const days = Array.from({ length: 7 }, (_, index) => {

@@ -1,8 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState } from "react";
-export const InventoryContext = createContext();
 
-export const InventoryProvider = ({ children }) => {
-    const [inventory, setInventory] = useState([
+const initialInventory = (() => {
+    const now = Date.now();
+    return [
         {
             id: '1',
             name: 'Coffee Beans',
@@ -12,7 +13,7 @@ export const InventoryProvider = ({ children }) => {
             maxStock: 50,
             unitCost: 12.5,
             supplier: 'Premium Coffee Co.',
-            lastRestocked: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+            lastRestocked: new Date(now - 5 * 24 * 60 * 60 * 1000),
         },
         {
             id: '2',
@@ -23,7 +24,7 @@ export const InventoryProvider = ({ children }) => {
             maxStock: 100,
             unitCost: 1.2,
             supplier: 'Dairy Best',
-            lastRestocked: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+            lastRestocked: new Date(now - 2 * 24 * 60 * 60 * 1000),
         },
         {
             id: '3',
@@ -34,7 +35,7 @@ export const InventoryProvider = ({ children }) => {
             maxStock: 30,
             unitCost: 0.8,
             supplier: 'Sweet Supplies Ltd.',
-            lastRestocked: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+            lastRestocked: new Date(now - 10 * 24 * 60 * 60 * 1000),
         },
         {
             id: '4',
@@ -45,9 +46,14 @@ export const InventoryProvider = ({ children }) => {
             maxStock: 40,
             unitCost: 10.0,
             supplier: 'Green Leaf Traders',
-            lastRestocked: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+            lastRestocked: new Date(now - 7 * 24 * 60 * 60 * 1000),
         }
-    ]);
+    ];
+})();
+export const InventoryContext = createContext();
+
+export const InventoryProvider = ({ children }) => {
+    const [inventory, setInventory] = useState(initialInventory);
 
     const addInventoryItem = (item) => {
         setInventory(prevInventory => [...prevInventory, item]);

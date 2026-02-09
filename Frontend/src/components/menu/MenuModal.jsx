@@ -1,18 +1,21 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import React, { useEffect } from 'react'
 import { useContext } from 'react'
 import { MenuContext } from '../../contexts/MenuContext.jsx'
 
+const emptyItemData = {
+    name: '',
+    category: '',
+    price: 0,
+    cost: 0,
+    description: '',
+    image: '',
+    available: true,
+};
+
 function MenuModal({categories, onClose, itemToEdit, setItemToEdit, defaultValues}) {
     const {addMenuItem, updateMenuItem} = useContext(MenuContext);
-    const [itemData, setItemData] = React.useState({
-        name: '',
-        category: '',  
-        price: 0,
-        cost: 0,
-        description: '',
-        image: '',
-        available: true,
-    });
+    const [itemData, setItemData] = React.useState(emptyItemData);
 
     useEffect(() => {
         if (defaultValues) {
@@ -25,6 +28,8 @@ function MenuModal({categories, onClose, itemToEdit, setItemToEdit, defaultValue
                 image: defaultValues.image || '',
                 available: defaultValues.available ?? true,
             });
+        } else {
+            setItemData(emptyItemData);
         }
     }, [defaultValues, itemToEdit]);
 
@@ -88,15 +93,7 @@ function MenuModal({categories, onClose, itemToEdit, setItemToEdit, defaultValue
             };
             addMenuItem(newItem);
             // Reset form for next item
-            setItemData({
-                name: '',
-                category: '',
-                price: 0,
-                cost: 0,
-                description: '',
-                image: '',
-                available: true,
-            });
+            setItemData(emptyItemData);
         }
         onClose();
     }

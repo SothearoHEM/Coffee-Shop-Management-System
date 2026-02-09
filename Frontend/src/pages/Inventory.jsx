@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { PlusIcon } from 'lucide-react'
 import InventoryCard from '../components/Inventory/InventoryCard.jsx'
 import { useContext } from 'react'
@@ -7,10 +7,13 @@ import Lottie from 'lottie-react'
 import LowStockAlert from '../components/Inventory/LowStockAlert.jsx'
 import InventoryModal from '../components/Inventory/InventoryModal.jsx'
 import NotFound from '../assets/NotFound.json'
+import { UiContext } from '../contexts/UIContext.jsx'
+import SectionSkeleton from '../components/common/SectionSkeleton.jsx'
 
 
 function Inventory() {
   const { inventory, setInventory } = useContext(InventoryContext);
+  const { isLoading, setLoading } = useContext(UiContext);
   const [isInventoryModalOpen, setIsInventoryModalOpen] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(null);
   const handleRestock = (itemId) => {
@@ -35,6 +38,12 @@ function Inventory() {
     setItemToEdit(item);
     setIsInventoryModalOpen(true);
   }
+
+  useEffect(() => {
+    setLoading(true);
+    const timeoutId = setTimeout(() => setLoading(false), 350);
+    return () => clearTimeout(timeoutId);
+  }, [setLoading]);
   return (
     <div className='xl:w-7xl lg:p-2 w-full md:p-2 xl:p-0 p-2 mx-auto mt-6 flex flex-col space-y-4'>
         <div className='flex md:items-center md:justify-between mb-4 flex-col md:flex-row gap-4'>
@@ -50,7 +59,9 @@ function Inventory() {
           )
         }
         <div className='w-full h-full '>
-            {inventory.length > 0 ? (
+            {isLoading ? (
+              <SectionSkeleton />
+            ) : inventory.length > 0 ? (
               <div className='grid md:grid-cols-3 grid-cols-1 gap-6 mb-5'>
                   {inventory.map(item => (
                     <InventoryCard key={item.id} item={item} onRestock={() => handleRestock(item.id)} onEdit={() => handleEdit(item)} />

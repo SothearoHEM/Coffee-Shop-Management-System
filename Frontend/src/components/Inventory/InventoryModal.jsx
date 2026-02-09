@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useContext, useEffect, useState } from 'react'
 import { InventoryContext } from '../../contexts/InventoryContext.jsx';
 

@@ -1,15 +1,18 @@
 import { PlusIcon } from 'lucide-react'
 import StaffInfoCard from '../components/staff/StaffInfoCard.jsx'
-import { useContext,useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext.jsx';
 import StaffCard from '../components/staff/StaffCard.jsx';
 import AddStaffModal from '../components/staff/AddStaffModal.jsx';
 import Lottie from 'lottie-react';
 import NotFound from '../assets/NotFound.json';
+import { UiContext } from '../contexts/UIContext.jsx';
+import SectionSkeleton from '../components/common/SectionSkeleton.jsx';
 
 function Staff() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {users} = useContext(AuthContext);
+  const { isLoading, setLoading } = useContext(UiContext);
   const closeModal = () => {
     setIsModalOpen(false);
     setUserToEdit(null);
@@ -21,6 +24,12 @@ function Staff() {
     setIsModalOpen(true);
   }
   const defaultValues = userToEdit ? users.find(user => user.id === userToEdit) : null;
+
+  useEffect(() => {
+    setLoading(true);
+    const timeoutId = setTimeout(() => setLoading(false), 350);
+    return () => clearTimeout(timeoutId);
+  }, [setLoading]);
   return (
     <div className='xl:w-7xl lg:p-2 w-full md:p-2 xl:p-0 p-2 mx-auto mt-6 flex flex-col space-y-4'>
         <div className='flex md:items-center md:justify-between mb-4 flex-col md:flex-row gap-4'>
@@ -32,15 +41,17 @@ function Staff() {
         </div>
         <StaffInfoCard />
         <div className='w-full'>
-          {users.length > 0 ? 
+          {isLoading ? (
+            <SectionSkeleton />
+          ) : users.length > 0 ? (
             <div className='grid md:grid-cols-3 grid-cols-1 gap-6 mb-5'>
                 {users.map((user) => <StaffCard key={user.id} user={user} userEdit={userEdit} />)}
             </div>
-          :
-          <div className='flex items-center justify-center h-125 mx-auto mb-5'>
-            <Lottie animationData={NotFound} loop={true} className='w-64 h-64 md:w-90 md:h-90'/>
-          </div>
-          }
+          ) : (
+            <div className='flex items-center justify-center h-125 mx-auto mb-5'>
+              <Lottie animationData={NotFound} loop={true} className='w-64 h-64 md:w-90 md:h-90'/>
+            </div>
+          )}
         </div>
         {isModalOpen && <AddStaffModal closeModal={closeModal} userToEdit={userToEdit} setUserToEdit={setUserToEdit} defaultValues={defaultValues} />}
     </div>

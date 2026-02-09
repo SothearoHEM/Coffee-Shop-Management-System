@@ -1,12 +1,13 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-    const [staffRoles, setStaffRoles] = useState([
+    const staffRoles = [
         { id: '1', role: 'admin' },
         { id: '2', role: 'manager' },
         { id: '3', role: 'staff' },
-    ]);
+    ];
     const [users, setUsers] = useState([
         {
         id: '1',

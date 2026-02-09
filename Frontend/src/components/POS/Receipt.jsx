@@ -12,10 +12,10 @@ const Receipt = ({ close }) => {
   const [paymentMethod, setPaymentMethod] = useState("Cash");
 
   // Generate receipt ID
-  const receiptId = `RCP-${Date.now().toString().slice(-8)}`;
+  const now = new Date();
+  const receiptId = `RCP-${now.getTime().toString().slice(-8)}`;
   
   // Get current date and time
-  const now = new Date();
   const dateTime = now.toLocaleString('en-US', {
     year: 'numeric',
     month: '2-digit',
